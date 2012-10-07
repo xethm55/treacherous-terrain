@@ -1,10 +1,13 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
+#include <map>
+#include <list>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include "refptr.h"
 #include "Map.h"
+#include "Shot.h"
 #include "Player.h"
 #include "GLProgram.h"
 #include "WFObj.h"
@@ -30,11 +33,13 @@ class Client
         void recenter_cursor();
         void draw_player(refptr<Player> player);
         void draw_map();
+        void draw_shot(refptr<Shot> shot);
         void draw_overlay();
         void draw_sky();
         void draw_lava();
         void draw_shot_ring();
         void draw_shot_ring_instance();
+        void create_shot();
 
         bool m_mouse_grabbed;
         double m_player_dir_x;
@@ -64,6 +69,8 @@ class Client
         GLBuffer m_tex_quad_attributes;
         GLBuffer m_quad_attributes;
         GLBuffer m_shot_ring_attributes;
+        GLBuffer m_sphere_attributes;
+        GLBuffer m_sphere_indices;
         refptr<Network> m_net_client;
         bool m_client_has_focus;
         sf::Texture m_lava_texture;
@@ -71,6 +78,8 @@ class Client
         bool m_drawing_shot;
         float m_drawing_shot_distance;
         bool m_shot_fired;
+        std::list< refptr<Shot> > m_shots;
+        typedef std::list< refptr<Shot> >::iterator m_shots_iterator_t;
 };
 
 #endif
